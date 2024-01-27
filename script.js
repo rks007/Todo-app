@@ -15,9 +15,10 @@ function addTodo(e){
     //newLi.classList.add('list-group-item');
     newLi.className = "list-group-item d-flex justify-content-between";
 
-    newLi.innerHTML = `<h3 class="flex-grow-1">${currentTodo}</h3> 
-    <button class="btn btn-warning mx-3" onclick="editTodo(this)">Edit</button>
-    <button class="btn btn-danger" onclick="removeTodo(this)">Remove</button>`
+    newLi.innerHTML = `<input type="checkbox"  id="checkbox" class="checkbox" onchange="completed(this)">
+    <h3 class="flex-grow-1" id="h3text">${currentTodo}</h3> 
+    <button class="btn btn-warning mx-3" id="edit" onclick="editTodo(this)">Edit</button>
+    <button class="btn btn-danger" id="remove" onclick="removeTodo(this)">Remove</button>`
 
     parentList.appendChild(newLi);
     currentInput.value = "";//after adding clear the input box
@@ -34,6 +35,7 @@ function editTodo(currElement){
         let currentTodoText = currElement.previousElementSibling.value;
         let currHeading = document.createElement('h3')
         currHeading.className = "flex-grow-1"
+        currHeading.id = "h3text"
         currHeading.textContent = currentTodoText;
         currElement.parentElement.replaceChild(currHeading, currElement.previousElementSibling)
 
@@ -50,6 +52,20 @@ function editTodo(currElement){
     }
     
 
+}
+
+function completed(currElement){
+    let edit = currElement.parentElement.querySelector("#edit");
+    let textt = currElement.parentElement.querySelector("#h3text");
+
+    if (currElement.checked) {
+        edit.style.display = "none";
+        textt.style.textDecoration = "line-through"
+    } 
+    else {
+        edit.style.display = "inline-block";
+        textt.style.textDecoration = "none"
+    }
 }
 
 
